@@ -147,11 +147,7 @@ $( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
   //var path = [];
   path.push(center);
 
-<<<<<<< Updated upstream
   $('.leaflet-map-pane').on('click', '.my-thumb-icon', function() {
-=======
-path.push(center);
->>>>>>> Stashed changes
 
     console.log($(this));
     $('.my-thumb-icon').find('.thumb').hide();
