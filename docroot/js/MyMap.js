@@ -118,6 +118,7 @@ $( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
     console.log(report);
 
     for(var i=1; i <report.length;i++){
+      var latlngs = [];
       var directionsService = new google.maps.DirectionsService();
       var request = makeRequest(report[i-1][1][0], report[i-1][1][1], report[i][1][0], report[i][1][1]);
       directionsService.route(request, function(result, status) {
@@ -144,7 +145,6 @@ $(".leaflet-map-pane").on('click', ".thumb", function(e){
   console.log(e);
   currentVenue = {id:$(e.target).attr('id'), lat:$(e.currentTarget).data('lat'), lng:$(e.currentTarget).data('lng')};
   var current = map.getCenter();
-
     var latlngs = [current, currentVenue];
     var directionsService = new google.maps.DirectionsService();
     var request = makeRequest(latlngs[0].lat, latlngs[0].lng, latlngs[1].lat, latlngs[1].lng);
