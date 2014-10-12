@@ -15,6 +15,7 @@
 %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
 <%@ page import="javax.portlet.PortletPreferences" %>
 <%@ page import="com.liferay.portal.service.UserLocalServiceUtil" %>
@@ -64,6 +65,10 @@
 </script>
 
 <div id="map"></div>
+
+<form action="<portlet:actionURL/>" method="post">
+    <aui:button type="submit" value="Save"/>
+</form>
 
 <script>
 	var map = new Map($("#map")[0]);
