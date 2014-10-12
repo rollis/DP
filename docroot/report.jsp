@@ -49,18 +49,11 @@ System.out.println(renderRequest.getParameter("method"));
 %>
 
 <body>
-	<div class='map-wrapper'>
-		<div id="map" style="width:100%;height:35%;"></div>
-	</div>
 	<script>
 		var map;
 		var portletURL = '/PlanningMap-portlet/html/';
-		$(document).ready(function() {
-			renderMapPanel();
-			$.getJSON(portletURL + 'sample.json', renderVenueList);
-		});
 
-		function renderMapWrapper() {
+		function renderMapPanel() {
 			$.get(portletURL + 'mappanel.mustache', function(template) {
 				$('.map-wrapper').html(Mustache.render(template, {}));
 				map = new MyMap('map');
@@ -78,6 +71,11 @@ System.out.println(renderRequest.getParameter("method"));
 				alert(json.Message);
 			}
 		};
+		
+		$(document).ready(function() {
+			renderMapPanel();
+			$.getJSON(portletURL + 'sample.json', renderVenueList);
+		});
 	</script>
 	<div class='map-wrapper'></div>
 	<div class="venue-list-wrapper"></div>
@@ -93,5 +91,5 @@ System.out.println(renderRequest.getParameter("method"));
 		</button>
 	</div>
 
-	<div id="topcontrol" title="Scroll Back to Top" style="position: fixed; bottom: 5px; right: 5px; opacity: 1; cursor: pointer;"><img src="assets/img/up.png" style="width:51px; height:42px"></div>
+	<div id="topcontrol" title="Scroll Back to Top" style="position: fixed; bottom: 5px; right: 5px; opacity: 1; cursor: pointer;"><img src="/PlanningMap-portlet/html/assets/img/up.png" style="width:51px; height:42px"></div>
 </body>
