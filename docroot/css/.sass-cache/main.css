@@ -1,1 +1,15 @@
+.inline {
+  display: -moz-inline-stack;
+  display: inline-block;
+  zoom: 1;
+  *display: inline; }
+
+.my-div-icon {
+  border: 2px solid black;
+  background-color: white;
+  opacity: 0.8; }
+
+img.thumb {
+  width: 100%;
+  height: 100%; }
 

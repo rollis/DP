@@ -49,16 +49,16 @@
 	System.out.println(renderRequest.getParameter("method"));
 %>
 
-<script>
-	var portletURL = '/PlanningMap-portlet/html/';
-
-	new MyMap('map');
-</script>
-
 <body>
+	<div class='map-wrapper'>
+		<div id="map" style="width:900px;height:540px;"></div>
+	</div>
 	<script>
+		var portletURL = '/PlanningMap-portlet/html/';
+
+		new MyMap('map');
 		$(document).ready(function() {
-			renderMapWrapper();
+			
 			$.getJSON(portletURL + 'sample.json', renderVenueList);
 		});
 
@@ -80,7 +80,7 @@
 			}
 		};
 	</script>
-	<div class='map-wrapper'></div>
+	
 	<div class="venue-list-wrapper"></div>
 	<div class="venue-detail-wrapper"></div>
 
