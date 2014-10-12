@@ -3,7 +3,7 @@ var elapedtime = 0;
 var detail;
 
 
-MyMap = function(id){
+MyMap = function(id, report){
   $("#"+id).append('<div id="radius_input">\
     <div><button class="btn-u travel-type" type="button" value="DRIVING" style="margin-right:5px;"><i class="fa fa-car"></i></button><button class="btn-u travel-type" value="WALKING" type="button"><i class="fa fa-paw"></i></button>\
     </div>\
