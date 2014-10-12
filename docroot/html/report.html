@@ -8,7 +8,24 @@
   </style>
   <script src="../js/jquery-1.11.1.min.js"></script>
   <script type="text/javascript" src="../js/mustache.js"></script>
-  <script type="text/javascript" src="../js/venuelist.js"</script>
+  <script type="text/javascript" src="../js/venuelist.js"></script>
+
+
+  <!-- JS Global Compulsory -->
+ <!--  // <script type="text/javascript" src="assets/plugins/jquery-1.10.2.min.js"></script>
+  // <script type="text/javascript" src="assets/plugins/jquery-migrate-1.2.1.min.js"></script>
+  // <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>-->
+  <!-- JS Implementing Plugins -->
+  <script type="text/javascript" src="assets/plugins/back-to-top.js"></script>
+  <!--<script type="text/javascript" src="assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>-->
+  <!-- JS Page Level -->
+  <script type="text/javascript" src="assets/js/app.js"></script>
+  <!--<script type="text/javascript">
+    jQuery(document).ready(function() {
+      App.init();
+      App.initFancybox();        
+    });
+  </script>-->
 
   <!-- // <script src="../js/three.js"></script> -->
   <!-- // <script src="../js/Color.js"></script> -->
@@ -56,8 +73,10 @@
   <div class="venue-detail-wrapper">
   </div>
 
-  <div>
-
+  <div class="print-pdf-wrapper">
+    <script>var pfHeaderImgUrl = '';var pfHeaderTagline = '';var pfdisableClickToDel = 0;var pfHideImages = 0;var pfImageDisplayStyle = 'right';var pfDisablePDF = 0;var pfDisableEmail = 0;var pfDisablePrint = 0;var pfCustomCSS = '';var pfBtVersion='1';(function(){var js, pf;pf = document.createElement('script');pf.type = 'text/javascript';if('https:' == document.location.protocol){js='https://pf-cdn.printfriendly.com/ssl/main.js'}else{js='http://cdn.printfriendly.com/printfriendly.js'}pf.src=js;document.getElementsByTagName('head')[0].appendChild(pf)})();</script>
+    <a href="http://www.printfriendly.com" style="color:#6D9F00;text-decoration:none;" class="printfriendly" onclick="window.print();return false;" title="Printer Friendly and PDF"><img style="border:none;-webkit-box-shadow:none;box-shadow:none;" src="http://cdn.printfriendly.com/button-print-grnw20.png" alt="Print Friendly and PDF"/></a>
   </div>
 
+  <div id="topcontrol" title="Scroll Back to Top" style="position: fixed; bottom: 5px; right: 5px; opacity: 1; cursor: pointer;"><img src="assets/img/up.png" style="width:51px; height:42px"></div>
 </body>
