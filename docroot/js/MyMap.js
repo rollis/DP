@@ -3,7 +3,7 @@ var elapedtime = 0;
 var detail;
 var currentVenue;
 
-MyMap = function(id){
+MyMap = function(id, report){
   $("#"+id).append('<div id="radius_input">\
     <div><button class="btn-u travel-type" type="button" value="DRIVING" style="margin-right:5px;"><i class="fa fa-car"></i></button><button class="btn-u travel-type" value="WALKING" type="button"><i class="fa fa-paw"></i></button>\
     </div>\
@@ -29,15 +29,6 @@ MyMap = function(id){
       drivingtype = google.maps.TravelMode.DRIVING;    
     }
   });
-
-  if(typeof report !== "undefined"){
-    console.log(report);
-    var savedPath = [];
-    report.forEach(function(item){
-      savedPath.push(L.latLng(item[1][0], item[1][1]));
-    });
-    L.polyline(savedPath, {color: 'red'}).addTo(map);
-  }
 
 
 $( "#slider" ).slider({
@@ -135,6 +126,24 @@ $( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
   //var path = [];
   path.push(center);
 
+  if(typeof report !== "undefined"){
+    console.log(report);
+
+    for(var i=1; i <report.length;i++){
+      var latlngs = [];
+      var directionsService = new google.maps.DirectionsService();
+      var request = makeRequest(report[i-1][1][0], report[i-1][1][1], report[i][1][0], report[i][1][1]);
+      directionsService.route(request, function(result, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          result.routes[0].overview_path.forEach(function(item) {
+            latlngs.push(L.latLng(item.k, item.B));
+          });
+          L.polyline(latlngs, {color: 'red'}).addTo(map);
+        }
+      });
+    }
+  }
+  
   $('.leaflet-map-pane').on('click', '.my-thumb-icon', function(e) {
     var target = $(e.currentTarget).find('.thumb');
     currentVenue = {id:target.attr('id'), lat:target.data('lat'), lng:target.data('lng')};
@@ -148,7 +157,6 @@ $( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
     console.log(e);
     currentVenue = {id:$(e.target).attr('id'), lat:$(e.currentTarget).data('lat'), lng:$(e.currentTarget).data('lng')};
     var current = map.getCenter();
-
       var latlngs = [current, currentVenue];
       var directionsService = new google.maps.DirectionsService();
       var request = makeRequest(latlngs[0].lat, latlngs[0].lng, latlngs[1].lat, latlngs[1].lng);

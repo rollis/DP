@@ -58,6 +58,17 @@
 
 
 %>
+<style type="text/css">
+    @import '/PlanningMap-portlet/css/venuecell.css';
+    @import '/PlanningMap-portlet/css/main.css';
+    @import '/PlanningMap-portlet/css/mapmarker.css';
+    @import '/PlanningMap-portlet/html/assets/css/pages/feature_timeline2.css';
+    @import '/PlanningMap-portlet/html/assets/css/plugins.css';
+    @import '/PlanningMap-portlet/html/assets/css/app.css';
+    @import '/PlanningMap-portlet/html/assets/plugins/bootstrap/css/bootstrap.min.css';
+    @import '/PlanningMap-portlet/html/assets/plugins/font-awesome/css/font-awesome.min.css';
+    @import '/PlanningMap-portlet/css/heecheon.css';
+</style>
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css">
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet-src.js"></script>
 <script src="/PlanningMap-portlet/js/OSMBuildings-Leaflet.js"></script>
@@ -109,7 +120,7 @@
 
 	function goSaveForm(){
 		saveForm = $('#<portlet:namespace />saveForm');
-		var venues = myMap.getVenues();
+		var venues = myMap.getSelectedVenues();
 		var venuesString = JSON.stringify(venues);
 		saveForm.find("input[name='<portlet:namespace />venues']").val(venuesString);
 		saveForm.submit();
