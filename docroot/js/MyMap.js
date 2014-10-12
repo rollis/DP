@@ -1,4 +1,7 @@
 var path=[], venues= [], track=[];
+var elapedtime = 0;
+var detail;
+
 
 MyMap = function(id){
   $("#"+id).append('<div id="radius_input">\
@@ -26,6 +29,51 @@ MyMap = function(id){
       drivingtype = google.maps.TravelMode.DRIVING;    
     }
   });
+
+  if(typeof report !== "undefined"){
+    console.log(report);
+    var index = 0;    
+    report.forEach(function(item){
+      console.log(item);
+      var savedPath = [];
+      if(item[1] === 'C'){
+        savedPath.push($.parseJSON(item[0]));
+      }else{
+        var request = {
+          ajaxStep: 'business',
+          id: item[0]
+        };
+
+        $.get("http://edwardrockhands.com/Edward_Map/yelp_api.php",request, function(res){
+          var data = $.parseJSON(res);
+          $.each(data, function(index, value){
+            console.log(value);
+            var address = value.location.display_address.toString();
+            new google.maps.Geocoder().geocode({"address": address}, function(results, status) {
+              if(status == google.maps.GeocoderStatus.OK) {
+                savedPath.push([results[0]["geometry"]["location"]["k"],results[0]["geometry"]["location"]["B"]]);
+
+                var myIcon = L.divIcon({className: 'my-thumb-icon', iconSize: L.point(50, 50), html:"<div class='thumb' id='"+value.id+"' data-lat='"+lat_long.latitude+"' data-lng='"+lat_long.longitude+"'>"+value.html+"</div>"});
+                L.marker(savedPath, {icon: myIcon}).addTo(map);
+              }
+            });
+          });
+        });
+      }
+    });
+  }
+
+
+$( "#slider" ).slider({
+  value:500,
+  min: 0,
+  max: 10000,
+  step: 100,
+  slide: function( event, ui ) {
+    $( "#amount" ).val( ui.value + " meter ");
+  }
+});
+$( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
 
   $( "#slider" ).slider({
     value:500,
@@ -99,7 +147,11 @@ MyMap = function(id){
   //var path = [];
   path.push(center);
 
+<<<<<<< Updated upstream
   $('.leaflet-map-pane').on('click', '.my-thumb-icon', function() {
+=======
+path.push(center);
+>>>>>>> Stashed changes
 
     console.log($(this));
     $('.my-thumb-icon').find('.thumb').hide();
@@ -107,17 +159,27 @@ MyMap = function(id){
   });
   console.log($('.my-thumb-icon'));
 
+$(".leaflet-map-pane").on('click', ".thumb", function(e){
+  $("#alert").show();
+  currentVenue = {id:$(e.target).attr('id'), lat:$(e.currentTarget).data('lat'), lng:$(e.currentTarget).data('lng')};
+  var current = map.getCenter();
 
-  $(".leaflet-map-pane").on('click', ".thumb", function(e){
-    $("#alert").show();
-    currentVenue = {id:$(e.target).attr('id'), lat:$(e.currentTarget).data('lat'), lng:$(e.currentTarget).data('lng')};
-    console.log(currentVenue);
-    console.log(e.target);
-  });
+    var latlngs = [current, currentVenue];
+    var directionsService = new google.maps.DirectionsService();
+    var request = makeRequest(latlngs[0].lat, latlngs[0].lng, latlngs[1].lat, latlngs[1].lng);
+    var duration, distance;
+    directionsService.route(request, function(result, status) {
+      if (status === google.maps.DirectionsStatus.OK) {
+        duration = result.routes[0].legs[0].duration;
+        distance = result.routes[0].legs[0].distance;
+        console.log(duration, distance);
+      }
+    });
+});
 
-  $("#alert .close, #alert .cancel").click(function(e){
-    $("#alert").hide();
-  });
+$("#alert .close, #alert #cancel").click(function(e){
+  $("#alert").hide();
+});
 
   $("#add_venue").click(function(e){
     this.selectedVenues.push([currentVenue.id, 'Y']);
