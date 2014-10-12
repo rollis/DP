@@ -74,14 +74,25 @@
 	user.userAddress = $.parseJSON('<%=userAddress%>');
 
 	var resUrl ='<%=renderResponse.encodeURL(jsURL.toString())%>';
+	var saveForm;
 </script>
 
+<aui:script>	
+	function saveForm(){
+		saveForm = $('#<portlet:namespace />saveForm');
+		
+		
+		saveForm.submit();
+	};
+</aui:script>
 
-<div id="map" style="width:870px;height:540px;"></div>
 
-<aui:form action="<%=saveURL%>" method="post" cssClass="inline">
+<div id="map" style="width:900px;height:540px;"></div>
+
+<aui:form name="saveForm" action="<%=saveURL%>" method="post" cssClass="inline">
     <aui:input type="hidden" name="method" value="save"/>
-    <aui:button type="submit" value="Save"/>
+    
+    <aui:button type="button" value="Save" onclick="saveForm();"/>
 </aui:form>
 
 <aui:form action="<%=renderURL%>" method="post" cssClass="inline">
