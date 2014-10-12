@@ -15,6 +15,7 @@
 %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
 <%@ page import="javax.portlet.PortletPreferences" %>
 <%@ page import="com.liferay.portal.service.UserLocalServiceUtil" %>
@@ -49,12 +50,28 @@
 
 %>
 <script type="text/javascript" src="/PlanningMap-portlet/js/jquery-1.11.1.min.js"></script>
+<script src="/PlanningMap-portlet/js/three.min.js"></script>
+<script src="/PlanningMap-portlet/js/Color.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhzZJIOGZWs2Jes80c5Oxy6zA-kqhuEQQ"></script>
+<script src="/PlanningMap-portlet/js/map.js"></script>
+
 <script>
 	var user = new Object();
 	user.userId = '<%=userId%>';
 	user.userName = '<%=userName%>';
 	user.userAddress = $.parseJSON('<%=userAddress%>');
-	
+
 	var resUrl ='<%=renderResponse.encodeURL(jsURL.toString())%>';
 </script>
-This is the <b>Planning Map</b> portlet.<br>
+
+<div id="map"></div>
+
+<form action="<portlet:actionURL/>" method="post">
+    <aui:button type="submit" value="Save"/>
+</form>
+
+<script>
+	var map = new Map($("#map")[0]);
+</script>
+
+
