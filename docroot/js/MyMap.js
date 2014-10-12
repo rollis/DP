@@ -90,7 +90,7 @@ $( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
               latitude: results[0]["geometry"]["location"]["k"],
               longitude: results[0]["geometry"]["location"]["B"]
             };
-            var markerElement = L.divIcon({className: 'my-thumb-icon', iconSize: L.point(50, 50), html:"<div class='counters'><span class='counter-icon'><i class='map-marker fa fa-coffee rounded'></i></span><div class='thumb' id='"+value.id+"' data-lat='"+lat_long.latitude+"' data-lng='"+lat_long.longitude+"'>"+value.html+"</div>"});
+            var markerElement = L.divIcon({className: 'my-thumb-icon', iconSize: L.point(50, 50), html:"<div class='counters'><span class='counter-icon'><i class='map-marker bubble fa fa-coffee rounded'></i></span><div class='thumb' id='"+value.id+"' data-lat='"+lat_long.latitude+"' data-lng='"+lat_long.longitude+"'>"+value.html+"</div>"});
             L.marker([lat_long.latitude, lat_long.longitude], {icon: markerElement}).addTo(map);
           }
         });
