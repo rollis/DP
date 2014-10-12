@@ -1,6 +1,80 @@
+var path=[], venues= [], track=[];
+
 MyMap = function(id){
+$("#"+id).append('<div id="radius_input">\
+  <div><button class="btn-u travel-type" type="button" value="DRIVING" style="margin-right:5px;"><i class="fa fa-car"></i></button><button class="btn-u travel-type" value="WALKING" type="button"><i class="fa fa-paw"></i></button>\
+  </div>\
+  <p><label for="amount">Radius:</label>\
+  <input type="text" id="amount" readonly style="width:100px;border:0; color:#f6931f; font-weight:bold;"></p>\
+  <div id="slider"></div>\
+  <div>\
+  <label for="keyword">Keyword:</label>\
+  <input type="text" id="keyword" value="restaurant" style="margin-bottom:10px;">\
+  </div>\
+  <button class="btn btn-success btn-xs" type="button" id="search"><i class="fa fa-search"></i>Search</button>\
+  </div>');
+
+//var venues=[];
+var currentVenue = null;
+var drivingtype = google.maps.TravelMode.DRIVING;
+
+$(".travel-type").click(function(e){
+  if($(e.target).val() === "WALKING"){
+    drivingtype = google.maps.TravelMode.WALKING;
+  }else{
+    drivingtype = google.maps.TravelMode.DRIVING;    
+  }
+});
+
+$( "#slider" ).slider({
+      value:500,
+      min: 0,
+      max: 10000,
+      step: 100,
+      slide: function( event, ui ) {
+        $( "#amount" ).val( ui.value + " meter ");
+      }
+    });
+    $( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
+
+$("#search").click(function(e){
+  $(".my-thumb-icon").remove();
+  var request = {
+      ajaxStep: "search",
+      term: "restaurant",
+      latitude: 40.75831,
+      longitude: -73.99151,
+      term: $("#keyword").val(),
+      radius: $("#amount").val().split(" ")[0],
+      limit:20
+  };
+
+  $.get("http://edwardrockhands.com/Edward_Map/yelp_api.php",request, function(res){
+    var data = $.parseJSON(res);
+    $.each(data, function(index, value){
+      var address = value.location.display_address.toString();
+      new google.maps.Geocoder().geocode({"address": address}, function(results, status) {
+        if(status == google.maps.GeocoderStatus.OK) {
+          lat_long = {
+            latitude: results[0]["geometry"]["location"]["k"],
+            longitude: results[0]["geometry"]["location"]["B"]
+          };
+          var myIcon = L.divIcon({className: 'my-thumb-icon', iconSize: L.point(50, 50), html:"<img class='thumb' id='"+value.id+"' data-lat='"+lat_long.latitude+"' data-lng='"+lat_long.longitude+"' src='"+value.image_url+"'>"});
+          L.marker([lat_long.latitude, lat_long.longitude], {icon: myIcon}).addTo(map);
+        }
+      });
+    });
+  });
+});
 
 var map = new L.Map(id).setView([40.75831, -73.99151], 17);
+
+
+var myIcon = L.divIcon({className: 'current-location-icon', iconSize: L.point(50, 50), html:"<i class='fa fa-child' style='font-size:30px;'></i>"});
+var center = map.getCenter();
+venues.push([[center.lat, center.lng].toString(),'C']);
+L.marker([center.lat, center.lng], {icon: myIcon}).addTo(map);
+
 
 new L.TileLayer(
   'http://{s}.tiles.mapbox.com/v3/osmbuildings.gm744p3p/{z}/{x}/{y}.png',
@@ -16,57 +90,54 @@ var osmb = new OSMBuildings(map)
 
 L.control.layers({}, { Buildings: osmb }).addTo(map);
 
-var path = [];
+//var path = [];
+path.push(center);
 
-var request = {
-    ajaxStep: "search",
-    term: "restaurant",
-    latitude: 40.75831,
-    longitude: -73.99151
-};
+
+
 $(".leaflet-map-pane").on('click', ".thumb", function(e){
-  
+  $("#alert").show();
+  currentVenue = {id:$(e.target).attr('id'), lat:$(e.target).data('lat'), lng:$(e.target).data('lng')};
+  console.log(currentVenue);
   console.log(e.target);
 });
 
-$.get("http://edwardrockhands.com/Edward_Map/yelp_api.php",request, function(res){
-  var data = $.parseJSON(res);
-  $.each(data, function(index, value){
-    console.log(value);
-    var address = value.location.display_address.toString();
-    new google.maps.Geocoder().geocode({"address": address}, function(results, status) {
-      if(status == google.maps.GeocoderStatus.OK) {
-        lat_long = {
-          latitude: results[0]["geometry"]["location"]["k"],
-          longitude: results[0]["geometry"]["location"]["B"]
-        };
-
-        var myIcon = L.divIcon({className: 'my-div-icon', iconSize: L.point(50, 50), html:"<img class='thumb' src='"+value.image_url+"'>"});
-        console.log(myIcon);
-        L.marker([lat_long.latitude, lat_long.longitude], {icon: myIcon}).addTo(map);
-      }
-    });
-  });
+$("#alert .close, #alert .cancel").click(function(e){
+  $("#alert").hide();
 });
 
-map.on("click", function(e){
-  path.push(e.latlng);
+$("#add_venue").click(function(e){
+  venues.push([currentVenue.id, 'Y']);
+  console.log(venues);
+  map.panTo(new L.LatLng(currentVenue.lat, currentVenue.lng));
+  $(".my-thumb-icon").remove();
+  $(".current-location-icon").remove();
+
+  currentVenue = null;
+  $("#alert").hide();
+
+
+  var myIcon = L.divIcon({className: 'current-location-icon', iconSize: L.point(50, 50), html:"<i class='fa fa-child' style='font-size:30px;'></i>"});
+  var center = map.getCenter();
+  L.marker([center.lat, center.lng], {icon: myIcon}).addTo(map);
+
+  path.push(center);
   if(path.length === 2){    
     var latlngs = [];
     var directionsService = new google.maps.DirectionsService();
-        var request = makeRequest(path[0].lat, path[0].lng, path[1].lat, path[1].lng);
-        path.shift();
-        directionsService.route(request, function(result, status) {
-            if (status === google.maps.DirectionsStatus.OK) {
-              result.routes[0].overview_path.forEach(function(item) {
-                latlngs.push(L.latLng(item.k, item.B));
-              });
-              L.polyline(latlngs, {color: 'red'}).addTo(map);
-            }
-        });
+    var request = makeRequest(path[0].lat, path[0].lng, path[1].lat, path[1].lng);
+    path.shift();
+    directionsService.route(request, function(result, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          result.routes[0].overview_path.forEach(function(item) {
+            track
+            latlngs.push(L.latLng(item.k, item.B));
+          });
+          L.polyline(latlngs, {color: 'red'}).addTo(map);
+        }
+    });
   }
 });
-
 
 
 function makeRequest(start_lat, start_long, end_lat, end_long) {
@@ -75,7 +146,7 @@ function makeRequest(start_lat, start_long, end_lat, end_long) {
     var request = {
         origin: start,
         destination: end,
-        travelMode: google.maps.TravelMode.DRIVING
+        travelMode: drivingtype
     };
 
     return request;
@@ -93,4 +164,13 @@ function requestLatLng(address, callback) {
     }
   });
 }
+}
+
+
+MyMap.prototype.getPath = function(){
+  return path;
+}
+
+MyMap.prototype.getVenues = function(){
+  return venues;
 }

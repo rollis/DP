@@ -5,7 +5,7 @@
 	*display:inline;
 }
 
-.my-div-icon{
+.my-thumb-icon{
   border:2px solid black;
   background-color:white;
   opacity: 0.8;
@@ -13,4 +13,23 @@
 img.thumb{
   width:100%;
   height:100%;
+}
+#alert{
+  display: none;
+  position:fixed;
+  left:40%;
+  top:40%;
+}
+#radius_input{
+  padding:10px;
+  opacity: .8;
+  background: #C9D787;
+  position: relative;
+  z-index: 100;
+  left:10px;
+  top:100px;
+  width:200px;
+}
+#amount{
+  background-color: transparent;
 }
