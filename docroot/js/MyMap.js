@@ -30,15 +30,6 @@ MyMap = function(id, report){
     }
   });
 
-  if(typeof report !== "undefined"){
-    console.log(report);
-    var savedPath = [];
-    report.forEach(function(item){
-      savedPath.push(L.latLng(item[1][0], item[1][1]));
-    });
-    L.polyline(savedPath, {color: 'red'}).addTo(map);
-  }
-
 
 $( "#slider" ).slider({
   value:500,
@@ -123,6 +114,15 @@ $( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
   //var path = [];
   path.push(center);
 
+  if(typeof report !== "undefined"){
+    console.log(report);
+    var savedPath = [];
+    report.forEach(function(item){
+      savedPath.push(L.latLng(item[1][0], item[1][1]));
+    });
+    L.polyline(savedPath, {color: 'red'}).addTo(map);
+  }
+  
   $('.leaflet-map-pane').on('click', '.my-thumb-icon', function(e) {
     var target = $(e.currentTarget).find('.thumb');
     currentVenue = {id:target.attr('id'), lat:target.data('lat'), lng:target.data('lng')};
