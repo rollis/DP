@@ -11,7 +11,9 @@
 	-moz-box-shadow: 5px 6px 7px 0px #616161;
 	box-shadow: 5px 6px 7px 0px #616161;
 	min-width: inherit !important;
-	font-size: 24px;
+	
+	font-size: 20px;
+	padding-top: 5px;
 }
 
 .map-marker.fa.rounded.bubble:after {

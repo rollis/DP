@@ -21,14 +21,23 @@ img.thumb{
 }
 #radius_input{
   padding:10px;
-  opacity: .8;
+  opacity: .5;
   background: #C9D787;
   position: relative;
   z-index: 100;
   left:10px;
   top:100px;
   width:200px;
+  -webkit-transition: opacity .5s ease-in-out;
+  -moz-transition: opacity .5s ease-in-out;
+  -ms-transition: opacity .5s ease-in-out;
+  -o-transition: opacity .5s ease-in-out;
+  transition: opacity .5s ease-in-out;
 }
+#radius_input:hover{
+  opacity: .9;
+}
+
 #amount{
   background-color: transparent;
 }
