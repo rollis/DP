@@ -25,7 +25,7 @@ var request = {
     latitude: 40.75831,
     longitude: -73.99151
 };
-$()        
+
 $.get("yelp_api.php",request, function(res){
   var data = $.parseJSON(res);
   var result = $.parseJSON(data.result);
