@@ -24,6 +24,12 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.dateplanner.util.Utility" %>
 
+<portlet:actionURL var="saveURL"/>
+
+<portlet:renderURL var="renderURL">
+    <portlet:param name="jspPage" value="/report.jsp" />
+</portlet:renderURL>
+
 <portlet:resourceURL var="jsURL" id="js" escapeXml="false" />
 
 <portlet:defineObjects />
@@ -31,6 +37,8 @@
 <%
 	Utility util = new Utility();
 
+	String saved = renderRequest.getParameter("saved") != null ? renderRequest.getParameter("saved") : "false";
+	
 	String userId = renderRequest.getRemoteUser();
 	User user = UserLocalServiceUtil.getUser(Long.parseLong(userId));
 	String userName = user.getScreenName();
@@ -56,6 +64,7 @@
 <script src="/PlanningMap-portlet/js/map.js"></script>
 
 <script>
+	var saved = <%=saved%>;
 	var user = new Object();
 	user.userId = '<%=userId%>';
 	user.userName = '<%=userName%>';
@@ -66,9 +75,15 @@
 
 <div id="map"></div>
 
-<form action="<portlet:actionURL/>" method="post">
+<aui:form action="<%=saveURL%>" method="post">
+    <aui:input type="hidden" name="method" value="save"/>
     <aui:button type="submit" value="Save"/>
-</form>
+</aui:form>
+
+<aui:form action="<%=renderURL%>" method="post">
+	<aui:input type="hidden" name="method" value="report"/>
+	<aui:button type="submit" value="Report"/>
+</aui:form>
 
 <script>
 	var map = new Map($("#map")[0]);
