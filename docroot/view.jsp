@@ -40,7 +40,8 @@
 	String saved = renderRequest.getParameter("saved") != null ? renderRequest.getParameter("saved") : "false";
 	
 	String userId = renderRequest.getRemoteUser();
-	User user = UserLocalServiceUtil.getUser(Long.parseLong(userId));
+	User user = util.getUser(userId);
+	
 	String userName = user.getScreenName();
 	List<Address> addresses = user.getAddresses();
 	
@@ -57,11 +58,13 @@
 
 
 %>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css">
+<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet-src.js"></script>
+<script src="/PlanningMap-portlet/js/OSMBuildings-Leaflet.js"></script>
 <script type="text/javascript" src="/PlanningMap-portlet/js/jquery-1.11.1.min.js"></script>
-<script src="/PlanningMap-portlet/js/three.min.js"></script>
-<script src="/PlanningMap-portlet/js/Color.js"></script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhzZJIOGZWs2Jes80c5Oxy6zA-kqhuEQQ"></script>
-<script src="/PlanningMap-portlet/js/map.js"></script>
+<script src="/PlanningMap-portlet/js/MyMap.js"></script>
+
 
 <script>
 	var saved = <%=saved%>;
@@ -73,20 +76,20 @@
 	var resUrl ='<%=renderResponse.encodeURL(jsURL.toString())%>';
 </script>
 
-<div id="map"></div>
 
-<aui:form action="<%=saveURL%>" method="post">
+<div id="map" style="width:870px;height:540px;"></div>
+
+<aui:form action="<%=saveURL%>" method="post" cssClass="inline">
     <aui:input type="hidden" name="method" value="save"/>
     <aui:button type="submit" value="Save"/>
 </aui:form>
 
-<aui:form action="<%=renderURL%>" method="post">
+<aui:form action="<%=renderURL%>" method="post" cssClass="inline">
 	<aui:input type="hidden" name="method" value="report"/>
 	<aui:button type="submit" value="Report"/>
 </aui:form>
 
 <script>
-	var map = new Map($("#map")[0]);
+	new MyMap('map');
 </script>
-
 
