@@ -1,0 +1,30 @@
+.map-marker.fa.rounded {
+
+}
+
+.bubble {
+	position: relative;
+	width: 30px;
+	height: 30px;
+	padding: 0px;
+	background: #ADB400;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 5px 6px 7px 0px #616161;
+	-moz-box-shadow: 5px 6px 7px 0px #616161;
+	box-shadow: 5px 6px 7px 0px #616161;
+}
+
+.bubble:after {
+	content: "";
+	position: absolute;
+	bottom: -10px;
+	left: 10px;
+	border-style: solid;
+	border-width: 10px 5px 0;
+	border-color: #ADB400 transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+}

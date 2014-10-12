@@ -66,7 +66,7 @@ MyMap = function(id){
               latitude: results[0]["geometry"]["location"]["k"],
               longitude: results[0]["geometry"]["location"]["B"]
             };
-            var markerElement = L.divIcon({className: 'my-thumb-icon', iconSize: L.point(50, 50), html:"<div class='counters'><span class='counter-icon'><i class='fa fa-coffee rounded'></i></span><div class='thumb' id='"+value.id+"' data-lat='"+lat_long.latitude+"' data-lng='"+lat_long.longitude+"'>"+value.html+"</div>"});
+            var markerElement = L.divIcon({className: 'my-thumb-icon', iconSize: L.point(50, 50), html:"<div class='counters'><span class='counter-icon'><i class='map-marker fa fa-coffee rounded'></i></span><div class='thumb' id='"+value.id+"' data-lat='"+lat_long.latitude+"' data-lng='"+lat_long.longitude+"'>"+value.html+"</div>"});
             L.marker([lat_long.latitude, lat_long.longitude], {icon: markerElement}).addTo(map);
           }
         });
@@ -100,13 +100,9 @@ MyMap = function(id){
   path.push(center);
 
   $('.leaflet-map-pane').on('click', '.my-thumb-icon', function() {
-
-    console.log($(this));
-    $('.my-thumb-icon').find('.thumb').hide();
-    $(this).find('.thumb').show();
+    $('.my-thumb-icon').find('.output_controls').hide();
+    $(this).find('.output_controls').show();
   });
-  console.log($('.my-thumb-icon'));
-
 
   $(".leaflet-map-pane").on('click', ".thumb", function(e){
     $("#alert").show();
@@ -128,7 +124,6 @@ MyMap = function(id){
 
     currentVenue = null;
     $("#alert").hide();
-
 
     var myIcon = L.divIcon({className: 'current-location-icon', iconSize: L.point(50, 50), html:"<i class='fa fa-child' style='font-size:30px;'></i>"});
     var center = map.getCenter();
