@@ -84,6 +84,17 @@
 		
 		saveForm.submit();
 	};
+	
+	function goToReport(){
+		reportForm = $('#<portlet:namespace />reportForm');
+		if(saved){
+			reportForm.submit();
+		} else {
+			if(confirm("Do you want to disregard changes?")){
+				reportForm.submit();
+			}
+		}
+	};
 </aui:script>
 
 
@@ -92,12 +103,13 @@
 <aui:form name="saveForm" action="<%=saveURL%>" method="post" cssClass="inline">
     <aui:input type="hidden" name="method" value="save"/>
     
-    <aui:button type="button" value="Save" onclick="saveForm();"/>
+    <aui:button type="button" value="Save" cssClass="btn btn-primary" onclick="saveForm();"/>
 </aui:form>
 
-<aui:form action="<%=renderURL%>" method="post" cssClass="inline">
+<aui:form name="reportForm" action="<%=renderURL%>" method="post" cssClass="inline">
 	<aui:input type="hidden" name="method" value="report"/>
-	<aui:button type="submit" value="Report"/>
+	
+	<aui:button type="button" value="Report" cssClass="btn btn-primary" onclick="goToReport();"/>
 </aui:form>
 
 <script>
