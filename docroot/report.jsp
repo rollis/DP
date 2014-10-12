@@ -22,14 +22,11 @@
 <style type="text/css">
 @import '/PlanningMap-portlet/css/venuecell.css';
 
-@import
-	'/PlanningMap-portlet/html/assets/css/pages/feature_timeline2.css';
+@import '/PlanningMap-portlet/html/assets/css/pages/feature_timeline2.css';
 
 @import '/PlanningMap-portlet/html/assets/css/app.css';
 
-@import
-	'/PlanningMap-portlet/html/assets/plugins/bootstrap/css/bootstrap.min.css'
-	;
+@import '/PlanningMap-portlet/html/assets/plugins/bootstrap/css/bootstrap.min.css';
 </style>
 
 <script src="/PlanningMap-portlet/js/jquery-1.11.1.min.js"></script>

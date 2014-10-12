@@ -25,7 +25,6 @@ var request = {
     longitude: -73.99151
 };
 $(".leaflet-map-pane").on('click', ".thumb", function(e){
-  
   console.log(e.target);
 });
 
