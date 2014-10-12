@@ -39,6 +39,16 @@ body {
     white-space: nowrap;
 }
 
+.indexed-biz-name {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+.media-title.cbp_tmlabel {
+    margin: inherit !important;
+    padding: inherit !important;
+    color: inherit !important;
+}
+
 
 .media-avatar {
     margin-right: 12px;
@@ -50,6 +60,10 @@ body {
 .biz-rating-medium .rating {
     float: left;
     margin: 1px 6px 0 0;
+}
+
+.biz-name {
+    text-decoration: none;
 }
 
 .rating .stars_4_half {
@@ -107,7 +121,8 @@ body {
     outline: none;
 }
 
-.media-table-cell {
+.display-table-cell { 
+    color: #555;
     display: table-cell !important;
     vertical-align: middle !important
 }
