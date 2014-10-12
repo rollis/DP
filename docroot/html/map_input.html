@@ -1,0 +1,51 @@
+<head>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+	<script src="../js/google_api.js"></script>
+	<script src="../js/jquery-1.11.1.min.js"></script>
+
+	<link rel="stylesheet" href="../css/heecheon.css"/>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<!-- Bootstrap -->
+
+	<script>
+		$(document).ready(function() {
+			var startInput = document.getElementById("start");
+			var autocomplete = new google.maps.places.Autocomplete(startInput);
+
+			$("#start").focusout(function() {
+				requestLatLng($("#start").val(), getLatLng);
+			});
+
+			$("#searchBtn").click(function() {
+				var keyword = $("#yelpKeyword").val();
+				getBusinesses(start_latlng, keyword, setBusinesses);
+			});
+		});
+	</script>
+</head>
+
+<body>
+<div class="input_controls">
+	<div id="google_controls">
+		<input class="google_map_input controls" id="start" type="text" placeholder="Enter a Start Location">
+	</div>
+
+	<div id="yelp_controls">
+		<div class="yelp_mandatory_input">
+			<input class="yelp_input controls" id="yelpKeyword" type="text" placeholder="Enter a Keyword">
+			<button type="button" class="btn btn-primary btn-sm" id="searchBtn">
+				Search
+			</button>
+			<button type="button" class="btn btn-primary btn-sm" id="addKeyword">
+				<span class="caret"></span>
+			</button>
+		</div>
+		<div class="yelp_optional_input">
+		</div>
+	</div>
+</div>
+</body>
