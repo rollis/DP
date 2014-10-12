@@ -16,7 +16,6 @@ var osmb = new OSMBuildings(map)
 
 L.control.layers({}, { Buildings: osmb }).addTo(map);
 
-
 var path = [];
 
 var request = {
@@ -25,11 +24,14 @@ var request = {
     latitude: 40.75831,
     longitude: -73.99151
 };
+$(".leaflet-map-pane").on('click', ".thumb", function(e){
+  
+  console.log(e.target);
+});
 
-$.get("yelp_api.php",request, function(res){
+$.get("http://edwardrockhands.com/Edward_Map/yelp_api.php",request, function(res){
   var data = $.parseJSON(res);
-  var result = $.parseJSON(data.result);
-  $.each(result.businesses, function(index, value){
+  $.each(data, function(index, value){
     console.log(value);
     var address = value.location.display_address.toString();
     new google.maps.Geocoder().geocode({"address": address}, function(results, status) {
@@ -48,11 +50,6 @@ $.get("yelp_api.php",request, function(res){
 });
 
 map.on("click", function(e){
-/*
-  var myIcon = L.divIcon({className: 'my-div-icon', iconSize: L.point(50, 50), html:"hello"});
-  console.log(myIcon);
-  L.marker([e.latlng.lat, e.latlng.lng], {icon: myIcon}).addTo(map);
-*/
   path.push(e.latlng);
   if(path.length === 2){    
     var latlngs = [];

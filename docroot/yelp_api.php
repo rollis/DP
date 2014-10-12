@@ -63,6 +63,7 @@ function request($host, $path) {
     $ch = curl_init($signed_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, 0);
+
     $data = curl_exec($ch);
     curl_close($ch);
     
@@ -80,7 +81,7 @@ function get_search_results($opt) {
     
     $url_params['term'] = $opt["term"];
 
-    if($opt["location"] != "") {
+    if(isset($opt["location"])) {
         $url_params["location"] = $opt["location"];
     }
     else {
@@ -112,7 +113,7 @@ function make_search_result_blocks($response) {
     for($a=0 ; $a<count($b["location"]["display_address"]) ; $a++)
       $addresses .= $b["location"]["display_address"][$a] . "<br/>";
 
-    $blk .= 
+      $blk = 
 '<div class="output_controls">
   <div class="id" style="display:none;">' . $b["id"] . '</div>
   <div class="storeName">' . $b["name"] . '</div>
@@ -131,11 +132,12 @@ function make_search_result_blocks($response) {
     </div>
   </div>
 </div>';
+
+      $b["html"] = $blk;
+      $businesses[$i] = $b;
   }
 
-  $newR = ["result"=> $response, "block"=> $blk];
-
-  return $newR;
+  return $businesses;
 }
 
 /**
@@ -149,22 +151,22 @@ function get_options() {
     else
         $term = $GLOBALS["DEFAULT_TERM"];
         
-    if($_GET["location"] != "") {
+    if(isset($_GET["location"])) {
         $location = $_GET["location"];
     }
-    else if($_GET["latitude"] != "" && $_GET["longitude"] != "") {
+    else if(isset($_GET["latitude"]) && isset($_GET["longitude"])) {
         $latitude = $_GET["latitude"];
         $longitude = $_GET["longitude"];
     }
     else
         $location = $GLOBALS["DEFAULT_LOCATION"];
 
-    if($_GET["limit"] != "")
+    if(isset($_GET["limit"]))
         $limit = $_GET["limit"];
     else
         $limit = $GLOBALS["DEFAULT_LIMIT"];
 
-    if($_GET["radius"] != "")
+    if(isset($_GET["radius"]))
         $radius = $_GET["radius"];
     else
         $radius = $GLOBALS["DEFAULT_RADIUS"];
@@ -172,12 +174,17 @@ function get_options() {
     // Put options into an object
     $opt = array(
         "term"=>$term,
-        "location"=>$location,
-        "latitude"=>$latitude,
-        "longitude"=>$longitude,
         "limit"=>$limit,
         "radius"=>$radius
     );
+
+    if(isset($location)) {
+      $opt["location"] = $location;
+    }
+    else {
+      $opt["latitude"] = $latitude;
+      $opt["longitude"] = $longitude;
+    }
 
     return $opt;
 }
