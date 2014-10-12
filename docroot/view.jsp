@@ -77,11 +77,25 @@
 	var saveForm;
 </script>
 
-<aui:script>	
+<div id="map" style="width:900px;height:540px;"></div>
+<div class="alert alert-info fade in" id="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <h4>Add New Venue</h4>
+  <p>Do you want add new venue?</p>
+  <p>
+      <a class="btn-u btn-u-xs btn-u-default" id="add_venue" href="#"><i class="fa fa-cog"></i>OK</a> 
+      <a class="btn-u btn-u-xs btn-u-dark" id="cancel" href="#"><i class="fa fa-flask"></i>Cancel</a>
+  </p>
+</div>
+
+<aui:script>
+	var myMap = new MyMap('map');
+
 	function saveForm(){
 		saveForm = $('#<portlet:namespace />saveForm');
-		
-		
+		var venues = myMap.getVenues();
+		var venuesString = $.getJSON(venues);
+		saveForm.find("input[name='venues']").val(venuesString);
 		saveForm.submit();
 	};
 	
@@ -96,13 +110,9 @@
 		}
 	};
 </aui:script>
-
-
-<div id="map" style="width:900px;height:540px;"></div>
-
 <aui:form name="saveForm" action="<%=saveURL%>" method="post" cssClass="inline">
     <aui:input type="hidden" name="method" value="save"/>
-    
+    <aui:input type="hidden" name="venues" value=""/>    
     <aui:button type="button" value="Save" cssClass="btn btn-primary" onclick="saveForm();"/>
 </aui:form>
 
@@ -111,8 +121,3 @@
 	
 	<aui:button type="button" value="Report" cssClass="btn btn-primary" onclick="goToReport();"/>
 </aui:form>
-
-<script>
-	new MyMap('map');
-</script>
-
