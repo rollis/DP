@@ -52,6 +52,7 @@ $("#search").click(function(e){
   $.get("http://edwardrockhands.com/Edward_Map/yelp_api.php",request, function(res){
     var data = $.parseJSON(res);
     $.each(data, function(index, value){
+      console.log(value);
       var address = value.location.display_address.toString();
       new google.maps.Geocoder().geocode({"address": address}, function(results, status) {
         if(status == google.maps.GeocoderStatus.OK) {
@@ -59,7 +60,7 @@ $("#search").click(function(e){
             latitude: results[0]["geometry"]["location"]["k"],
             longitude: results[0]["geometry"]["location"]["B"]
           };
-          var myIcon = L.divIcon({className: 'my-thumb-icon', iconSize: L.point(50, 50), html:"<img class='thumb' id='"+value.id+"' data-lat='"+lat_long.latitude+"' data-lng='"+lat_long.longitude+"' src='"+value.image_url+"'>"});
+          var myIcon = L.divIcon({className: 'my-thumb-icon', iconSize: L.point(50, 50), html:"<div class='thumb' id='"+value.id+"' data-lat='"+lat_long.latitude+"' data-lng='"+lat_long.longitude+"'>"+value.html+"</div>"});
           L.marker([lat_long.latitude, lat_long.longitude], {icon: myIcon}).addTo(map);
         }
       });
