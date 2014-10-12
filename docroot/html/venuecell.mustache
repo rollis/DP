@@ -1,0 +1,43 @@
+{{#businesses}}
+<li class="venue-cell">
+    <div class="venue-picture">
+        <div class="photo-box pb-60s">
+        <a class="title" data-json="url" href="{{url}}">
+                <img alt="Lot 2" class="photo-box-img" data-json="image_url" height="60" src="{{image_url}}" width="60">
+            </a>
+        </div>
+    </div>
+    <div class="media-story">
+        <div class="media-title">
+            <span class="indexed-biz-name">5.     <a class="biz-name" data-json="url" href="{{url}}" data-hovercard-id="GcLhUflOx5HJqiXLAEkjNg">Lot 2</a>
+            </span>
+        </div>
+        <div class="media-body">
+            <div class="biz-rating biz-rating-medium clearfix">
+                <div class="rating">
+                    <i class="star-img stars_4_half" title="4.5 star rating">
+                        <img alt="4.5 star rating" data-json="rating_img_url" class="offscreen" height="303" src="{{rating_img_url}}" width="84">
+                    </i>
+                </div>
+                <span class="review-count rating-qualifier">
+                    171 reviews
+                </span>
+            </div>
+            <div class="media-block clearfix display-table">
+                <div class="media-avatar">
+                    <div class="photo-box pb-30s">
+                        <a data-json="" href="http://www.yelp.com/user_details?userid=rcHpDipSli8f-Bp5LctxYg">
+                            <img alt="Andrew S." class="photo-box-img" height="30" src="http://s3-media4.fl.yelpcdn.com/photo/wYM2iVtIal76lJiH97kw2Q/30s.jpg" width="30"> <!-- Yelp API business response does not have data for rating snippet user details.-->
+                        </a>
+                    </div>
+                </div>
+                <div class="media-story display-table-cell">
+                    <div class="ie-tablecell-hack" data-json="snippet_text">
+                        {{snippet_text}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+{{/businesses}}

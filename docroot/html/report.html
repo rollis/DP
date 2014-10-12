@@ -1,0 +1,259 @@
+<head>
+
+    <style type="text/css">
+        @import '../css/venuecell.css';
+    </style>
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../js/mustache.js"></script>
+
+    <script src="../js/three.js"></script>
+    <script src="../js/Color.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhzZJIOGZWs2Jes80c5Oxy6zA-kqhuEQQ"></script>
+    <script src="../js/map.js"></script>
+    <script>
+        var map = new Map($("#map")[0]);
+    </script>
+
+</head>
+<body>
+    <script>
+        // this should be replaced.
+        var data = {
+          "businesses": [
+          {
+              "categories": [
+              [
+              "Local Flavor",
+              "localflavor"
+              ],
+              [
+              "Mass Media",
+              "massmedia"
+              ]
+              ],
+              "display_phone": "+1-415-908-3801",
+              "id": "yelp-san-francisco",
+              "is_claimed": true,
+              "is_closed": false,
+              "image_url": "http://s3-media2.ak.yelpcdn.com/bphoto/7DIHu8a0AHhw-BffrDIxPA/ms.jpg",
+              "location": {
+                "address": [
+                "140 New Montgomery St"
+                ],
+                "city": "San Francisco",
+                "country_code": "US",
+                "cross_streets": "3rd St & Opera Aly",
+                "display_address": [
+                "140 New Montgomery St",
+                "(b/t Natoma St & Minna St)",
+                "SOMA",
+                "San Francisco, CA 94105"
+                ],
+                "neighborhoods": [
+                "SOMA"
+                ],
+                "postal_code": "94105",
+                "state_code": "CA"
+            },
+            "mobile_url": "http://m.yelp.com/biz/4kMBvIEWPxWkWKFN__8SxQ",
+            "name": "Yelp",
+            "phone": "4159083801",
+            "rating_img_url": "http://media1.ak.yelpcdn.com/static/201012161694360749/img/ico/stars/stars_3.png",
+            "rating_img_url_large": "http://media3.ak.yelpcdn.com/static/201012161053250406/img/ico/stars/stars_large_3.png",
+            "rating_img_url_small": "http://media1.ak.yelpcdn.com/static/201012162337205794/img/ico/stars/stars_small_3.png",
+            "review_count": 3347,
+            "snippet_image_url": "http://s3-media2.ak.yelpcdn.com/photo/LjzacUeK_71tm2zPALcj1Q/ms.jpg",
+            "snippet_text": "Sometimes we ask questions without reading an email thoroughly as many of us did for the last event.  In honor of Yelp, the many questions they kindly...",
+            "url": "http://www.yelp.com/biz/yelp-san-francisco",
+            "menu_provider": "yelp",
+            "menu_date_updated": 1317414369
+        },
+        {
+          "categories": [
+          [
+          "Local Flavor",
+          "localflavor"
+          ],
+          [
+          "Mass Media",
+          "massmedia"
+          ]
+          ],
+          "display_phone": "+1-415-908-3801",
+          "id": "yelp-san-francisco",
+          "is_claimed": true,
+          "is_closed": false,
+          "image_url": "http://s3-media2.ak.yelpcdn.com/bphoto/7DIHu8a0AHhw-BffrDIxPA/ms.jpg",
+          "location": {
+            "address": [
+            "140 New Montgomery St"
+            ],
+            "city": "San Francisco",
+            "country_code": "US",
+            "cross_streets": "3rd St & Opera Aly",
+            "display_address": [
+            "140 New Montgomery St",
+            "(b/t Natoma St & Minna St)",
+            "SOMA",
+            "San Francisco, CA 94105"
+            ],
+            "neighborhoods": [
+            "SOMA"
+            ],
+            "postal_code": "94105",
+            "state_code": "CA"
+        },
+        "mobile_url": "http://m.yelp.com/biz/4kMBvIEWPxWkWKFN__8SxQ",
+        "name": "Yelp",
+        "phone": "4159083801",
+        "rating_img_url": "http://media1.ak.yelpcdn.com/static/201012161694360749/img/ico/stars/stars_3.png",
+        "rating_img_url_large": "http://media3.ak.yelpcdn.com/static/201012161053250406/img/ico/stars/stars_large_3.png",
+        "rating_img_url_small": "http://media1.ak.yelpcdn.com/static/201012162337205794/img/ico/stars/stars_small_3.png",
+        "review_count": 3347,
+        "snippet_image_url": "http://s3-media2.ak.yelpcdn.com/photo/LjzacUeK_71tm2zPALcj1Q/ms.jpg",
+        "snippet_text": "Sometimes we ask questions without reading an email thoroughly as many of us did for the last event.  In honor of Yelp, the many questions they kindly...",
+        "url": "http://www.yelp.com/biz/yelp-san-francisco",
+        "menu_provider": "yelp",
+        "menu_date_updated": 1317414369
+    }
+    ],
+    "region": {
+        "center": {
+          "latitude": 37.786138600000001,
+          "longitude": -122.40262130000001
+      },
+      "span": {
+          "latitude_delta": 0.0,
+          "longitude_delta": 0.0
+      }
+  },
+  "total": 10651
+}
+
+
+$(document).ready(function() {
+    console.log("ready!");
+    // // http://stackoverflow.com/questions/18281183/jquery-cross-domain-request-to-get-json-response-without-callback
+    // // http://stackoverflow.com/questions/24528211/refused-to-execute-script-from-because-its-mime-type-application-json-is
+    // $.ajax({
+    //     url: 'http://172.31.178.185:8080/PlanningMap-portlet/sample.json',
+    //     dataType: 'jsonp',
+    //     jsonp: 'callback',
+    //     success: render
+    //     // crossDomain: true,
+    //     // jsonpCallback: 'render'
+    // });
+
+    render(data); // this should be separated file
+    // render()
+});
+
+
+function render(jsondata) {
+    if (!jsondata.Error) {
+        var template = $('#venue-cell-template').html(); // this should be separated file
+        // var template = $.get('venuecell.mustache').html(); 
+        var html = Mustache.to_html(template,jsondata);
+        $('#venue-list').html(html);
+    } else {
+        alert(json.Message);
+    }
+};
+
+</script>
+
+
+<div class="venue-list-wrapper">
+<li class="venue-cell">
+    <div class="venue-picture">
+        <div class="photo-box pb-60s">
+            <a class="title" data-json="url" href="/biz/lot-2-brooklyn-2">
+                <img alt="Lot 2" class="photo-box-img" data-json="image_url" height="60" src="http://s3-media4.fl.yelpcdn.com/bphoto/XOFZkosCdjfNwJ9-p0g9MA/60s.jpg" width="60">
+            </a>
+        </div>
+    </div>
+    <div class="media-story">
+        <div class="media-title">
+            <span class="indexed-biz-name">5.     <a class="biz-name" data-json="url" href="/biz/lot-2-brooklyn-2" data-hovercard-id="GcLhUflOx5HJqiXLAEkjNg">Lot 2</a>
+            </span>
+        </div>
+        <div class="media-body">
+            <div class="biz-rating biz-rating-medium clearfix">
+                <div class="rating">
+                    <i class="star-img stars_4_half" title="4.5 star rating">
+                        <img alt="4.5 star rating" data-json="rating_img_url" class="offscreen" height="303" src="http://s3-media3.fl.yelpcdn.com/assets/2/www/img/c2252a4cd43e/ico/stars/v2/stars_map.png" width="84">
+                    </i>
+                </div>
+                <span class="review-count rating-qualifier">
+                    171 reviews
+                </span>
+            </div>
+            <div class="media-block clearfix display-table">
+                <div class="media-avatar">
+                    <div class="photo-box pb-30s">
+                        <a data-json="" href="http://www.yelp.com/user_details?userid=rcHpDipSli8f-Bp5LctxYg">
+                            <img alt="Andrew S." class="photo-box-img" height="30" src="http://s3-media4.fl.yelpcdn.com/photo/wYM2iVtIal76lJiH97kw2Q/30s.jpg" width="30"> <!-- Yelp API business response does not have data for rating snippet user details.-->
+                        </a>
+                    </div>
+                </div>
+                <div class="media-story display-table-cell">
+                    <div class="ie-tablecell-hack" data-json="snippet_text">
+                        I highly recommend <span class="highlighted">Sunday Supper</span>, which has a $30 adult prix fixe (3...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+
+
+
+<ul id="venue-list">
+    <script id="venue-cell-template" type="text/template">
+        {{#businesses}}
+        <li class="venue-cell">
+            <div class="venue-picture">
+                <div class="photo-box pb-60s">
+                    <a class="title" data-json="url" href="{{url}}">
+                        <img alt="Lot 2" class="photo-box-img" data-json="image_url" height="60" src="{{image_url}}" width="60">
+                    </a>
+                </div>
+            </div>
+            <div class="media-story">
+                <div class="media-title">
+                    <span class="indexed-biz-name">5.     <a class="biz-name" data-json="url" href="{{url}}" data-hovercard-id="GcLhUflOx5HJqiXLAEkjNg">Lot 2</a>
+                    </span>
+                </div>
+                <div class="media-body">
+                    <div class="biz-rating biz-rating-medium clearfix">
+                        <div class="rating">
+                            <i class="star-img stars_4_half" title="4.5 star rating">
+                                <img alt="4.5 star rating" data-json="rating_img_url" class="offscreen" height="303" src="{{rating_img_url}}" width="84">
+                            </i>
+                        </div>
+                        <span class="review-count rating-qualifier">
+                            171 reviews
+                        </span>
+                    </div>
+                    <div class="media-block clearfix display-table">
+                        <div class="media-avatar">
+                            <div class="photo-box pb-30s">
+                                <a data-json="" href="http://www.yelp.com/user_details?userid=rcHpDipSli8f-Bp5LctxYg">
+                                    <img alt="Andrew S." class="photo-box-img" height="30" src="http://s3-media4.fl.yelpcdn.com/photo/wYM2iVtIal76lJiH97kw2Q/30s.jpg" width="30"> <!-- Yelp API business response does not have data for rating snippet user details.-->
+                                </a>
+                            </div>
+                        </div>
+                        <div class="media-story display-table-cell">
+                            <div class="ie-tablecell-hack" data-json="snippet_text">
+                                {{snippet_text}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        {{/businesses}}
+    </script>
+</ul>
+</div>
+</body>
