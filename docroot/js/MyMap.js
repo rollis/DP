@@ -98,7 +98,7 @@ path.push(center);
 
 $(".leaflet-map-pane").on('click', ".thumb", function(e){
   $("#alert").show();
-  currentVenue = {id:$(e.target).attr('id'), lat:$(e.target).data('lat'), lng:$(e.target).data('lng')};
+  currentVenue = {id:$(e.target).attr('id'), lat:$(e.currentTarget).data('lat'), lng:$(e.currentTarget).data('lng')};
   console.log(currentVenue);
   console.log(e.target);
 });
