@@ -76,6 +76,8 @@
 	font-weight: 300;
 	display: block;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	background-color: white;
+	width: 300px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 }
@@ -83,6 +85,7 @@
 	display: inline-block;
 	padding: 4px;
 	vertical-align: top;
+	width:100px;
 }
 .divide_panel {
 	display: block;
@@ -91,6 +94,7 @@
 	display: inline-block;
 	padding: 4px;
 	vertical-align: top;
+	width:160px;
 }
 .output_buttons {
 	float: right;
