@@ -39,10 +39,25 @@ src="/PlanningMap-portlet/js/venuelist.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet-src.js"></script>
 <script src="/PlanningMap-portlet/js/OSMBuildings-Leaflet.js"></script>
 <script type="text/javascript" src="/PlanningMap-portlet/js/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <script type="text/javascript"
 src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhzZJIOGZWs2Jes80c5Oxy6zA-kqhuEQQ"></script>
 <script src="/PlanningMap-portlet/js/MyMap.js"></script>
 <script type="text/javascript" src="/PlanningMap-portlet/html/assets/plugins/back-to-top.js"></script>
+
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/plugins/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/css/style.css">
+
+<!-- CSS Implementing Plugins -->
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/plugins/line-icons/line-icons.css">
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/plugins/font-awesome/css/font-awesome.min.css">
+
+<!-- CSS Theme -->    
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/css/themes/default.css" id="style_color">
+
+<!-- CSS Customization -->
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/css/custom.css">
 
 <%
 System.out.println(renderRequest.getParameter("method"));
