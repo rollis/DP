@@ -1,7 +1,5 @@
 .map-marker.fa.rounded.bubble {
 	position: relative;
-	width: 30px;
-	height: 30px;
 	padding: 0px;
 	background: #72c02c;
 	-webkit-border-radius: 5px;
@@ -12,8 +10,23 @@
 	box-shadow: 5px 6px 7px 0px #616161;
 	min-width: inherit !important;
 	
-	font-size: 20px;
+	font-size: 14px;
 	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+	display: inline-table;
+	white-space: nowrap;
+	 -webkit-transition: font-size .35s ease-in-out;
+	  -moz-transition: font-size .35s ease-in-out;
+	  -ms-transition: font-size .35s ease-in-out;
+	  -o-transition: font-size .35s ease-in-out;
+	  transition: font-size .35s ease-in-out;
+}
+
+.map-marker.fa.rounded.bubble:hover {
+	font-size:18px;
 }
 
 .map-marker.fa.rounded.bubble:after {
@@ -31,4 +44,9 @@
 
 .leaflet-marker-icon.my-thumb-icon{
 	background-color: transparent;
+}
+
+.map-marker.business-name {
+	display: inline-block;
+	font-family: sans-serif;
 }

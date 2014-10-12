@@ -62,9 +62,9 @@
     $.get('mappanel.mustache', function(template) {
       $('.map-wrapper').html(Mustache.render(template,{}));
       map = new MyMap('map');
-
-      $(".map-wrapper").on('click', ".thumb", function(e){
-        var bid = $(e.currentTarget).attr('id');
+      $("#add_venue").on('click', function(e){
+        debugger;
+        var bid = map.getCurrentVenue().id;
         console.log(bid);
         var request = {
           ajaxStep: "business",

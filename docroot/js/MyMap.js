@@ -1,7 +1,7 @@
 var path=[], venues= [], track=[];
 var elapedtime = 0;
 var detail;
-
+var currentVenue;
 
 MyMap = function(id){
   $("#"+id).append('<div id="radius_input">\
@@ -19,7 +19,7 @@ MyMap = function(id){
 
   this.searchResultVenues=[];
   this.selectedVenues=[];
-  var currentVenue = null;
+  //this.currentVenue = null;
   var drivingtype = google.maps.TravelMode.DRIVING;
 
   $(".travel-type").click(function(e){
@@ -90,7 +90,19 @@ $( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
               latitude: results[0]["geometry"]["location"]["k"],
               longitude: results[0]["geometry"]["location"]["B"]
             };
-            var markerElement = L.divIcon({className: 'my-thumb-icon', iconSize: L.point(50, 50), html:"<div class='counters'><span class='counter-icon'><i class='map-marker bubble fa fa-coffee rounded'></i></span><div class='thumb' id='"+value.id+"' data-lat='"+lat_long.latitude+"' data-lng='"+lat_long.longitude+"'>"+value.html+"</div>"});
+            var markerElement = L.divIcon({
+                className: 'my-thumb-icon', 
+                iconSize: L.point(50, 50), 
+                html:"<div class='counters'>\
+                        <span class='counter-icon'>\
+                          <i class='map-marker bubble fa fa-coffee rounded'>" + "<div class='map-marker business-name'>" + "&nbsp;&nbsp;" + value.name + "</div> </i>\
+                        </span>\
+                        <div class='thumb' id='"+value.id+"' data-lat='"+lat_long.latitude+"' data-lng='"+lat_long.longitude+"'>"
+                          + value.html+
+                        "</div>\
+                      </div>"
+                    });
+            // console.log(value);
             L.marker([lat_long.latitude, lat_long.longitude], {icon: markerElement}).addTo(map);
           }
         });
@@ -131,28 +143,28 @@ $( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
   });
   console.log($('.my-thumb-icon'));
 
-$(".leaflet-map-pane").on('click', ".thumb", function(e){
-  $("#alert").show();
-  console.log(e);
-  currentVenue = {id:$(e.target).attr('id'), lat:$(e.currentTarget).data('lat'), lng:$(e.currentTarget).data('lng')};
-  var current = map.getCenter();
+  $(".leaflet-map-pane").on('click', ".thumb", function(e){
+    $("#alert").show();
+    console.log(e);
+    currentVenue = {id:$(e.target).attr('id'), lat:$(e.currentTarget).data('lat'), lng:$(e.currentTarget).data('lng')};
+    var current = map.getCenter();
 
-    var latlngs = [current, currentVenue];
-    var directionsService = new google.maps.DirectionsService();
-    var request = makeRequest(latlngs[0].lat, latlngs[0].lng, latlngs[1].lat, latlngs[1].lng);
-    var duration, distance;
-    directionsService.route(request, function(result, status) {
-      if (status === google.maps.DirectionsStatus.OK) {
-        duration = result.routes[0].legs[0].duration;
-        distance = result.routes[0].legs[0].distance;
-        console.log(duration, distance);
-      }
-    });
-});
+      var latlngs = [current, currentVenue];
+      var directionsService = new google.maps.DirectionsService();
+      var request = makeRequest(latlngs[0].lat, latlngs[0].lng, latlngs[1].lat, latlngs[1].lng);
+      var duration, distance;
+      directionsService.route(request, function(result, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          duration = result.routes[0].legs[0].duration;
+          distance = result.routes[0].legs[0].distance;
+          console.log(duration, distance);
+        }
+      });
+  });
 
-$("#alert .close, #alert #cancel").click(function(e){
-  $("#alert").hide();
-});
+  $("#alert .close, #alert #cancel").click(function(e){
+    $("#alert").hide();
+  });
 
   $("#add_venue").click(function(e){
     self.selectedVenues.push([currentVenue.id, [currentVenue.lat, currentVenue.lng], 'Y']);
@@ -160,8 +172,6 @@ $("#alert .close, #alert #cancel").click(function(e){
     map.panTo(new L.LatLng(currentVenue.lat, currentVenue.lng));
     $(".my-thumb-icon").remove();
     $(".current-location-icon").remove();
-
-    currentVenue = null;
     $("#alert").hide();
 
     var myIcon = L.divIcon({className: 'current-location-icon', iconSize: L.point(50, 50), html:"<i class='fa fa-child' style='font-size:30px;'></i>"});
@@ -184,7 +194,6 @@ $("#alert .close, #alert #cancel").click(function(e){
       });
     }
   });
-
 
   function makeRequest(start_lat, start_long, end_lat, end_long) {
     var start = new google.maps.LatLng(start_lat, start_long);
@@ -217,6 +226,14 @@ MyMap.prototype.getPath = function(){
   return path;
 }
 
+MyMap.prototype.getVenues = function() {
+  return getSelectedVenues();
+}
+
 MyMap.prototype.getSelectedVenues = function(){
   return this.selectedVenues;
+}
+
+MyMap.prototype.getCurrentVenue = function() {
+  return currentVenue;
 }

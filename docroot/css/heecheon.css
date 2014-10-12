@@ -80,6 +80,7 @@
 	width: 300px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
+	z-index:10;
 }
 .output_left_panel {
 	display: inline-block;
