@@ -49,12 +49,24 @@
 
 %>
 <script type="text/javascript" src="/PlanningMap-portlet/js/jquery-1.11.1.min.js"></script>
+<script src="/PlanningMap-portlet/js/three.min.js"></script>
+<script src="/PlanningMap-portlet/js/Color.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhzZJIOGZWs2Jes80c5Oxy6zA-kqhuEQQ"></script>
+<script src="/PlanningMap-portlet/js/map.js"></script>
+
 <script>
 	var user = new Object();
 	user.userId = '<%=userId%>';
 	user.userName = '<%=userName%>';
 	user.userAddress = $.parseJSON('<%=userAddress%>');
-	
+
 	var resUrl ='<%=renderResponse.encodeURL(jsURL.toString())%>';
 </script>
-This is the <b>Planning Map</b> portlet.<br>
+
+<div id="map"></div>
+
+<script>
+	var map = new Map($("#map")[0]);
+</script>
+
+
