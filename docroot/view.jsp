@@ -107,11 +107,11 @@
 <aui:script>
 	var myMap = new MyMap('map');
 
-	function saveForm(){
+	function goSaveForm(){
 		saveForm = $('#<portlet:namespace />saveForm');
 		var venues = myMap.getVenues();
 		var venuesString = JSON.stringify(venues);
-		saveForm.find("input[name='venues']").val(venuesString);
+		saveForm.find("input[name='<portlet:namespace />venues']").val(venuesString);
 		saveForm.submit();
 	};
 	
@@ -129,7 +129,7 @@
 <aui:form name="saveForm" action="<%=saveURL%>" method="post" cssClass="inline">
     <aui:input type="hidden" name="method" value="save"/>
     <aui:input type="hidden" name="venues" value=""/>    
-    <aui:button type="button" value="Save" cssClass="btn btn-primary" onclick="saveForm();"/>
+    <aui:button type="button" value="Save" cssClass="btn btn-primary" onclick="goSaveForm();"/>
 </aui:form>
 
 <aui:form name="reportForm" action="<%=renderURL%>" method="post" cssClass="inline">

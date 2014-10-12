@@ -17,6 +17,11 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.Validator" %>
+<%@ page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %>
+<%@ page import="javax.portlet.PortletPreferences" %>
+
 <portlet:defineObjects />
 
 <!-- styles -->
@@ -60,14 +65,23 @@ src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhzZJIOGZWs2Jes80c5Oxy6zA-
 <link rel="stylesheet" href="/PlanningMap-portlet/html/assets/css/custom.css">
 
 <%
-System.out.println(renderRequest.getParameter("method"));
+	PortletPreferences preferences = renderRequest.getPreferences();
+	
+	 
+	String portletResource = ParamUtil.getString(request, "portletResource");
+	
+	if (Validator.isNotNull(portletResource)) {
+	    preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
+	}
+	String venues = preferences.getValue("venues", "[]");
 %>
 
 <body>
 	<script>
 		var map;
 		var portletURL = '/PlanningMap-portlet/html/';
-
+		var venues = $.parseJSON('<%=venues%>');
+		
 		function renderMapPanel() {
 			$.get(portletURL + 'mappanel.mustache', function(template) {
 				$('.map-wrapper').html(Mustache.render(template, {}));
