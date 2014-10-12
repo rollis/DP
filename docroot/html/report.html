@@ -1,55 +1,63 @@
 <head>
 
-    <style type="text/css">
-        @import '../css/venuecell.css';
-        @import 'assets/css/pages/feature_timeline2.css';
-        @import 'assets/css/app.css';
-    </style>
-    <script src="../js/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="../js/mustache.js"></script>
+  <style type="text/css">
+    @import '../css/venuecell.css';
+    @import 'assets/css/pages/feature_timeline2.css';
+    @import 'assets/css/app.css';
+    @import 'assets/plugins/bootstrap/css/bootstrap.min.css';
+  </style>
+  <script src="../js/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="../js/mustache.js"></script>
+  <script type="text/javascript" src="../js/venuelist.js"</script>
 
-    <!-- // <script src="../js/three.js"></script> -->
-    <!-- // <script src="../js/Color.js"></script> -->
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhzZJIOGZWs2Jes80c5Oxy6zA-kqhuEQQ"></script>
-    <!-- // <script src="../js/map.js"></script> -->
-    <script>
-        var map = new Map($("#map")[0]);
-    </script>
+  <!-- // <script src="../js/three.js"></script> -->
+  <!-- // <script src="../js/Color.js"></script> -->
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhzZJIOGZWs2Jes80c5Oxy6zA-kqhuEQQ"></script>
+  <!-- // <script src="../js/map.js"></script> -->
+  <script>
+    var map = new Map($("#map")[0]);
+  </script>
 
 </head>
 <body>
-    <script>
-      
-$(document).ready(function() {
-    $.getJSON('sample.json',render);
-});
+  <script>
 
-function render(jsondata) {
-    if (!jsondata.Error) {
-        var template = "";
-        $.get('venuecell.mustache', function(template) {
-          $('#venue-list').html(Mustache.render(template,jsondata));
-        }); 
-    } else {
-        alert(json.Message);
+    $(document).ready(function() {
+      renderMapWrapper();
+      $.getJSON('sample.json',renderVenueList);
+    });
+
+    function renderMapWrapper() {
+      $.get('mapwrapper.mustache', function(template) {
+        $('.map-wrapper').html(Mustache.render(template,{}));
+      }); 
     }
-};
 
-</script>
+    function renderVenueList(jsondata) {
+      if (!jsondata.Error) {
+        jsondata = addIndexToBusiness(jsondata);
+        console.log(jsondata);
+        $.get('venuecell.mustache', function(template) {
+          $('.venue-list-wrapper').html(Mustache.render(template,jsondata));
+        }); 
+      } else {
+        alert(json.Message);
+      }
+    };
 
-<div id="map">
-</div>
-
-<div class="venue-list-wrapper">
-    <ul id="venue-list" class="timeline-v2">
-    </ul>
-</div>
-<div class="venue-detail-wrapper">
-
-</div>
-
-<div>
     
-</div>
+
+  </script>
+  <div class='map-wrapper'>
+  </div>
+  <div class="venue-list-wrapper">
+
+  </div>
+  <div class="venue-detail-wrapper">
+  </div>
+
+  <div>
+
+  </div>
 
 </body>

@@ -1,23 +1,24 @@
+<ol id="venue-list" class="timeline-v2">
 {{#businesses}}
 <li>
     <time class="cbp_tmtime" datetime>
-
+    <span>{{time}}</span>
     </time>
     <i class="cbp_tmicon rounded-x hidden-xs"></i>
     <div class="venue-cell cbp_tmlabel">
         <div class="venue-picture">
             <div class="photo-box pb-60s">
-                <a class="title" data-json="url" href="{{url}}">
+                <a class="title" data-json="url" href="{{url}}"> 
                     <img alt="Lot 2" class="photo-box-img" data-json="image_url" height="60" src="{{image_url}}" width="60">
                 </a>
             </div>
         </div>
         <div class="media-story">
             <div class="media-title cbp_tmlabel">
-                <h3 class="indexed-biz-name">5.     <a class="biz-name" data-json="url" href="{{url}}" data-hovercard-id="GcLhUflOx5HJqiXLAEkjNg">Lot 2</a>
+                <h3 class="indexed-biz-name">{{index}}. <a class="biz-name" data-json="url" href="{{url}}" data-hovercard-id="GcLhUflOx5HJqiXLAEkjNg">Lot 2</a>
                 </h3>
             </div>
-            <div class="media-body row">
+            <div class="media-body">
                 <div class="biz-rating biz-rating-medium clearfix">
                     <div class="rating">
                         <i class="star-img stars_4_half" title="4.5 star rating">
@@ -47,3 +48,4 @@
     </div>
 </li>
 {{/businesses}}
+</ol>
