@@ -116,11 +116,19 @@ $( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
 
   if(typeof report !== "undefined"){
     console.log(report);
-    var savedPath = [];
-    report.forEach(function(item){
-      savedPath.push(L.latLng(item[1][0], item[1][1]));
-    });
-    L.polyline(savedPath, {color: 'red'}).addTo(map);
+
+    for(var i=1; i <report.length;i++){
+      var directionsService = new google.maps.DirectionsService();
+      var request = makeRequest(report[i-1][1][0], report[i-1][1][1], report[i][1][0], report[i][1][1]);
+      directionsService.route(request, function(result, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          result.routes[0].overview_path.forEach(function(item) {
+            latlngs.push(L.latLng(item.k, item.B));
+          });
+          L.polyline(latlngs, {color: 'red'}).addTo(map);
+        }
+      });
+    }
   }
   
   $('.leaflet-map-pane').on('click', '.my-thumb-icon', function(e) {
