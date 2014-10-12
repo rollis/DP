@@ -110,7 +110,7 @@
 	function saveForm(){
 		saveForm = $('#<portlet:namespace />saveForm');
 		var venues = myMap.getVenues();
-		var venuesString = $.getJSON(venues);
+		var venuesString = JSON.stringify(venues);
 		saveForm.find("input[name='venues']").val(venuesString);
 		saveForm.submit();
 	};

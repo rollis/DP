@@ -39,28 +39,36 @@ src="/PlanningMap-portlet/js/venuelist.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet-src.js"></script>
 <script src="/PlanningMap-portlet/js/OSMBuildings-Leaflet.js"></script>
 <script type="text/javascript" src="/PlanningMap-portlet/js/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <script type="text/javascript"
 src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhzZJIOGZWs2Jes80c5Oxy6zA-kqhuEQQ"></script>
 <script src="/PlanningMap-portlet/js/MyMap.js"></script>
 <script type="text/javascript" src="/PlanningMap-portlet/html/assets/plugins/back-to-top.js"></script>
+
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/plugins/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/css/style.css">
+
+<!-- CSS Implementing Plugins -->
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/plugins/line-icons/line-icons.css">
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/plugins/font-awesome/css/font-awesome.min.css">
+
+<!-- CSS Theme -->    
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/css/themes/default.css" id="style_color">
+
+<!-- CSS Customization -->
+<link rel="stylesheet" href="/PlanningMap-portlet/html/assets/css/custom.css">
 
 <%
 System.out.println(renderRequest.getParameter("method"));
 %>
 
 <body>
-	<div class='map-wrapper'>
-		<div id="map" style="width:100%;height:35%;"></div>
-	</div>
 	<script>
 		var map;
 		var portletURL = '/PlanningMap-portlet/html/';
-		$(document).ready(function() {
-			renderMapPanel();
-			$.getJSON(portletURL + 'sample.json', renderVenueList);
-		});
 
-		function renderMapWrapper() {
+		function renderMapPanel() {
 			$.get(portletURL + 'mappanel.mustache', function(template) {
 				$('.map-wrapper').html(Mustache.render(template, {}));
 				map = new MyMap('map');
@@ -78,6 +86,11 @@ System.out.println(renderRequest.getParameter("method"));
 				alert(json.Message);
 			}
 		};
+		
+		$(document).ready(function() {
+			renderMapPanel();
+			$.getJSON(portletURL + 'sample.json', renderVenueList);
+		});
 	</script>
 	<div class='map-wrapper'></div>
 	<div class="venue-list-wrapper"></div>
@@ -93,5 +106,5 @@ System.out.println(renderRequest.getParameter("method"));
 		</button>
 	</div>
 
-	<div id="topcontrol" title="Scroll Back to Top" style="position: fixed; bottom: 5px; right: 5px; opacity: 1; cursor: pointer;"><img src="assets/img/up.png" style="width:51px; height:42px"></div>
+	<div id="topcontrol" title="Scroll Back to Top" style="position: fixed; bottom: 5px; right: 5px; opacity: 1; cursor: pointer;"><img src="/PlanningMap-portlet/html/assets/img/up.png" style="width:51px; height:42px"></div>
 </body>
