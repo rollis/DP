@@ -85,7 +85,7 @@ src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBhzZJIOGZWs2Jes80c5Oxy6zA-
 		function renderMapPanel() {
 			$.get(portletURL + 'mappanel.mustache', function(template) {
 				$('.map-wrapper').html(Mustache.render(template, {}));
-				map = new MyMap('map');
+				map = new MyMap('map', venues);
 			});
 		}
 

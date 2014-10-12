@@ -74,7 +74,7 @@
 	font-family: Roboto, aria, sans-serif;
 	font-size: 13px;
 	font-weight: 300;
-	display: none;
+	display: block;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 	background-color: white;
 	width: 300px;

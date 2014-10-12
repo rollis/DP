@@ -1,4 +1,7 @@
 var path=[], venues= [], track=[];
+var elapedtime = 0;
+var detail;
+
 
 MyMap = function(id){
   $("#"+id).append('<div id="radius_input">\
@@ -26,6 +29,27 @@ MyMap = function(id){
       drivingtype = google.maps.TravelMode.DRIVING;    
     }
   });
+
+  if(typeof report !== "undefined"){
+    console.log(report);
+    var savedPath = [];
+    report.forEach(function(item){
+      savedPath.push(L.latLng(item[1][0], item[1][1]));
+    });
+    L.polyline(savedPath, {color: 'red'}).addTo(map);
+  }
+
+
+$( "#slider" ).slider({
+  value:500,
+  min: 0,
+  max: 10000,
+  step: 100,
+  slide: function( event, ui ) {
+    $( "#amount" ).val( ui.value + " meter ");
+  }
+});
+$( "#amount" ).val($( "#slider" ).slider( "value" ) + " meter" );
 
   $( "#slider" ).slider({
     value:500,
@@ -78,7 +102,7 @@ MyMap = function(id){
 
   var myIcon = L.divIcon({className: 'current-location-icon', iconSize: L.point(50, 50), html:"<i class='fa fa-child' style='font-size:30px;'></i>"});
   var center = map.getCenter();
-  this.selectedVenues.push([[center.lat, center.lng].toString(),'C']);
+  this.selectedVenues.push(['start',[center.lat, center.lng],'C']);
   L.marker([center.lat, center.lng], {icon: myIcon}).addTo(map);
 
 
@@ -99,25 +123,40 @@ MyMap = function(id){
   //var path = [];
   path.push(center);
 
-  $('.leaflet-map-pane').on('click', '.my-thumb-icon', function() {
+  $('.leaflet-map-pane').on('click', '.my-thumb-icon', function(e) {
+    var target = $(e.currentTarget).find('.thumb');
+    currentVenue = {id:target.attr('id'), lat:target.data('lat'), lng:target.data('lng')};
     $('.my-thumb-icon').find('.output_controls').hide();
     $(this).find('.output_controls').show();
   });
+  console.log($('.my-thumb-icon'));
 
-  $(".leaflet-map-pane").on('click', ".thumb", function(e){
-    $("#alert").show();
-    currentVenue = {id:$(e.target).attr('id'), lat:$(e.currentTarget).data('lat'), lng:$(e.currentTarget).data('lng')};
-    console.log(currentVenue);
-    console.log(e.target);
-  });
+$(".leaflet-map-pane").on('click', ".thumb", function(e){
+  $("#alert").show();
+  console.log(e);
+  currentVenue = {id:$(e.target).attr('id'), lat:$(e.currentTarget).data('lat'), lng:$(e.currentTarget).data('lng')};
+  var current = map.getCenter();
 
-  $("#alert .close, #alert .cancel").click(function(e){
-    $("#alert").hide();
-  });
+    var latlngs = [current, currentVenue];
+    var directionsService = new google.maps.DirectionsService();
+    var request = makeRequest(latlngs[0].lat, latlngs[0].lng, latlngs[1].lat, latlngs[1].lng);
+    var duration, distance;
+    directionsService.route(request, function(result, status) {
+      if (status === google.maps.DirectionsStatus.OK) {
+        duration = result.routes[0].legs[0].duration;
+        distance = result.routes[0].legs[0].distance;
+        console.log(duration, distance);
+      }
+    });
+});
+
+$("#alert .close, #alert #cancel").click(function(e){
+  $("#alert").hide();
+});
 
   $("#add_venue").click(function(e){
-    this.selectedVenues.push([currentVenue.id, 'Y']);
-    console.log(this.selectedVenues);
+    self.selectedVenues.push([currentVenue.id, [currentVenue.lat, currentVenue.lng], 'Y']);
+    console.log(self.selectedVenues);
     map.panTo(new L.LatLng(currentVenue.lat, currentVenue.lng));
     $(".my-thumb-icon").remove();
     $(".current-location-icon").remove();
@@ -138,7 +177,6 @@ MyMap = function(id){
       directionsService.route(request, function(result, status) {
         if (status === google.maps.DirectionsStatus.OK) {
           result.routes[0].overview_path.forEach(function(item) {
-            track
             latlngs.push(L.latLng(item.k, item.B));
           });
           L.polyline(latlngs, {color: 'red'}).addTo(map);
