@@ -23,15 +23,21 @@ function getLatLng(latlng){
 // It gets businesses related with keyword near with the latitude
 // and longitude, and then, it returns the businesses to the callback
 // function.
-function getBusinesses(latlng, keyword, callback) {
+function getBusinesses(latlng, keyword, callback, limit, radius) {
+	if(limit == undefined)
+		limit = null;
+	if(radius == undefined)
+		radius = null;
+
 	var request = {
 		ajaxStep: "search",
 		term: keyword,
 		latitude: latlng["latitude"],
-		longitude: latlng["longitude"]
+		longitude: latlng["longitude"],
+		limit: limit,
+		radius: radius
 	};
 
-	console.log(request);	
 	$.get("../yelp_api.php", request).done(function(response) {
 		callback(response);
 	});

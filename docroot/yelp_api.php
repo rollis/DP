@@ -21,8 +21,8 @@ $DEFAULT_RADIUS = 400;
 // These are limiations for numeric values
 $RADIUS_MIN = 400;
 $RADIUS_MAX = 10000;
-$SEARCH_MAX = 20;
-$SEARCH_MIN = 1;
+$LIMIT_MAX = 20;
+$LIMIT_MIN = 1;
 
 $SEARCH_PATH = '/v2/search/';
 $BUSINESS_PATH = '/v2/business/';
@@ -161,15 +161,21 @@ function get_options() {
     else
         $location = $GLOBALS["DEFAULT_LOCATION"];
 
-    if(isset($_GET["limit"]))
-        $limit = $_GET["limit"];
-    else
-        $limit = $GLOBALS["DEFAULT_LIMIT"];
+    $limit = $_GET["limit"];
+    if($limit == "")
+      $limit = $GLOBALS["DEFAULT_LIMIT"];
+    else if($limit < $GLOBALS["LIMIT_MIN"])
+      $limit = $GLOBALS["LIMIT_MIN"];
+    else if($limit > $GLOBALS["LIMIT_MAX"])
+      $limit = $GLOBALS["LIMIT_MAX"];
 
-    if(isset($_GET["radius"]))
-        $radius = $_GET["radius"];
-    else
-        $radius = $GLOBALS["DEFAULT_RADIUS"];
+    $radius = $_GET["radius"];
+    if($radius == "")
+      $radius = $GLOBALS["DEFAULT_RADIUS"];
+    else if($radius < $GLOBALS["RADIUS_MIN"])
+      $radius = $GLOBALS["RADIUS_MIN"];
+    else if($radius > $GLOBALS["RADIUS_MAX"])
+      $radius = $GLOBALS["RADIUS_MAX"];
 
     // Put options into an object
     $opt = array(

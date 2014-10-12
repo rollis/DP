@@ -6,9 +6,9 @@
 	<link rel="stylesheet" href="../css/heecheon.css"/>
 
 	<!-- Bootstrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../css/bootstrap-theme.min.css"/>
+	<script src="../js/bootstrap.min.js"></script>
 	<!-- Bootstrap -->
 
 	<script>
@@ -22,8 +22,28 @@
 
 			$("#searchBtn").click(function() {
 				var keyword = $("#yelpKeyword").val();
-				getBusinesses(start_latlng, keyword, setBusinesses);
+				var limit;
+				var radius;
+				if(!($("#limitCheck").prop("disabled")))
+					limit = $("#yelpLimit").val();
+				if(!($("#radiusCheck").prop("disabled")))
+					radius = $("#yelpRadius").val();
+				getBusinesses(start_latlng, keyword, setBusinesses, limit, radius);
 			});
+
+			$("#addKeyword").click(function() {
+				$(".yelp_option_panel").toggle("slow");
+			});
+
+			$("#limitCheck").change(function() {
+				$("#yelpLimit").prop("disabled",
+									!($("#yelpLimit").prop("disabled")));
+			});
+
+			$("#radiusCheck").change(function() {
+				$("#yelpRadius").prop("disabled",
+									!($("#yelpRadius").prop("disabled")));
+			})
 		});
 	</script>
 </head>
@@ -35,7 +55,7 @@
 	</div>
 
 	<div id="yelp_controls">
-		<div class="yelp_mandatory_input">
+		<div class="yelp_mandatory_panel">
 			<input class="yelp_input controls" id="yelpKeyword" type="text" placeholder="Enter a Keyword">
 			<button type="button" class="btn btn-primary btn-sm" id="searchBtn">
 				Search
@@ -44,7 +64,16 @@
 				<span class="caret"></span>
 			</button>
 		</div>
-		<div class="yelp_optional_input">
+		<div class="yelp_option_panel">
+			<span class="yelp_option_check">
+				<input type="checkbox" class="yelp_option_check" id="limitCheck">
+			</span>
+			<input class="yelp_option_input controls" id="yelpLimit" type="text" placeholder="Enter a Results Number" disabled="disabled">
+			<br/>
+			<span class="yelp_option_check">
+			<input type="checkbox" class="yelp_option_check" id="radiusCheck">
+			</span>
+			<input class="yelp_option_input controls" id="yelpRadius" type="text" placeholder="Enter a Radius (m)" disabled="disabled">
 		</div>
 	</div>
 </div>
